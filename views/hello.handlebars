@@ -1,0 +1,13 @@
+
+<h1> Demo - Home Page </h1>
+{{#with user}}
+	<p>{{name}}</p>
+	{{#with contact}}
+		<span>Twitter: @{{twitter}}</span>
+		<br>
+		<span>Facebook: {{facebook}}</span>
+		<br>
+	{{/with}}
+	<span>Address: {{address.city}},
+{{/with}}
+{{user.address.state}}</span>
