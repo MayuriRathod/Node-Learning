@@ -2,7 +2,6 @@
 Demo code to test routing using express js
 */
 
-
 // const path = require('path');
 const express = require('express');
 // const exphbs = require('express-handlebars');
