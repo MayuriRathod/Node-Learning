@@ -1,0 +1,75 @@
+﻿Audit Chrome Dev Tool
+
+
+The Audit panel can analyze a page as it loads. Then provides suggestions and optimizations for decreasing page load time and increase perceived (and real) responsiveness.
+
+In Audit, we can check for:
+
+1. Network Utilization
+This gives us insight of how effictively your network could be utilized, how the files can be compressed or merged and how much effective that could be.
+
+2. Web Page Performance
+This gives us insight of how the performance of our website or application can be improved, how optimizing images, priortizing visual content and proper catching can improve the performace.
+
+According to the suggestions, we can improve these network utilization and webpage performance
+
+
+This Audit can be done by:
+
+1. Audit at Present State
+
+2. Reload Page and Audit On Load
+
+
+Suggestions:
+
+There are lot of suggestions which we can get when we perform Auditing. Below we have listed few for reference:
+
+Network Utilization:
+
+1. Leverage browser caching:
+	The following resources are missing a cache expiration. Resources that do not specify an expiration may not be cached by browsers: <list>
+
+The following resources specify a "Vary" header that disables caching in most versions of Internet Explorer: <list>
+
+The following resources are explicitly non-cacheable. Consider making them cacheable if possible: <list>
+
+2. Minimize cookie size:
+The average cookie size for all requests on this page is 94 B
+
+3. Combine external Javascript:
+There are multiple resources served from same domain. Consider combining them into as few files as possible.
+4 JavaScript resources served from www.startpage.com.
+
+4. Enable gzip compression:
+Compressing the following resources with gzip could reduce their transfer size by about two thirds (~38.6 KB): asearch could save ~38.6 KB
+
+5. Serve static content from a cookieless domain
+3.1 KB of cookies were sent with the following static resources. Serve these static resources from a domain that does not set cookies: <list>
+
+6. Specify image dimension:
+A width and height should be specified for all images in order to speed up page display. The following image(s) are missing a width and/or height: <list>
+
+Web Page Performance
+
+1. Optimize the order of styles ans scripts
+The following external CSS files were included after an external JavaScript file in the document head. To ensure CSS files are downloaded in parallel, always include external CSS before external JavaScript. <list>
+3 inline script blocks were found in the head between an external CSS file and another resource. To allow parallel downloading, move the inline script before the external CSS file, or after the next resource
+
+2. Put css in document head
+CSS in the document body adversely impacts rendering performance.
+13 style block(s) in the/webhp?sourceid=chrome-instant&ion=1&espv=2&ie=UTF-8#q=audits+in+chrome+devTools&tbm=vidbody should be moved to the document head.
+
+3. Remove unused CSS rules
+1133 rules (75%) of CSS not used by the current page. <list>
+
+
+
+		The details of how to improve network Utilization and Web Page Performance can be improved by using methods suggested or using the documentation at:
+https://developers.google.com/speed/docs/insights/rules
+
+
+References:
+1. https://developers.google.com/speed/docs/insights/rules
+2. https://developer.chrome.com/devtools#audits
+

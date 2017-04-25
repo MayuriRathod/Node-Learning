@@ -1,0 +1,90 @@
+promise => 
+	example_link => https://jsfiddle.net/sbnajardhane/w3bjc19d/10/
+	Promises are just like the call back function but a better way to write and implement it.
+	The Promise object is used for asynchronous computations. A Promise represents a value which may be available now, or in the future, or never.
+
+	Promise states:
+		- pending	: initial state, not fulfilled or rejected.
+		- fulfilled	: meaning that the operation completed successfully.
+		- rejected	: meaning that the operation failed.
+
+	Promises methods
+		- Resolved 
+		- Reject
+
+    let myFirstPromise = new Promise((resolve, reject) => {
+  		// We call resolve(...) when what we were doing async succeeded, and reject(...) when it failed.
+  		// In this example, we use setTimeout(...) to simulate async code. 
+  		// In reality, you will probably be using something like XHR or an HTML5 API.
+  		setTimeout(function(){
+    		resolve("Success!"); // Yay! Everything went well!
+  		}, 250);
+	});
+
+	myFirstPromise.then((successMessage) => {
+  		// successMessage is whatever we passed in the resolve(...) function above.
+  		// It doesn't have to be a string, but if it is only a succeed message, it probably will be.
+  		console.log("Yay! " + successMessage);
+	});
+
+	It is used when we some other function is dependent on the executation of some other function.
+	for example:
+		- Average function to be executed after the sum is calulated
+		- Image should be resized after it is dowbloaded
+
+
+
+example: 
+
+
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Promises test</title>
+    <link rel="stylesheet" href="https://googlesamples.github.io/web-fundamentals/fundamentals/getting-started/primers/styles.css">
+</head>
+
+<body>
+    <div class="network-fake">
+        <label>
+            <input type="checkbox"> Fake network delay</label>
+    </div>
+    <div class="story"></div>
+    <svg class="spinner" viewBox="0 0 100 100" width="20" height="20">
+        <circle cx="50" cy="50" r="42" transform="rotate(-90,50,50)" />
+    </svg>
+    <script src="https://googlesamples.github.io/web-fundamentals/fundamentals/getting-started/primers/utils.js"></script>
+    <script>
+    var base = 'https://googlesamples.github.io/web-fundamentals/fundamentals/getting-started/primers/';
+    getJson(base + 'story.json').then(function(story) {
+        addHtmlToPage(story.heading);
+        var count = 0;
+        Promise.resolve(1);
+        return story.chapterUrls.reduce(function(chain, chapterUrl) {
+            console.log(chapterUrl);
+            console.log(chain);
+            // Once the last chapter's promise is done...
+            return chain.then(function() {
+                // …fetch the next chapter
+                return getJson(base + chapterUrl);
+            }).then(function(chapter) {
+                // and add it to the page
+                console.log(chain);
+                addHtmlToPage(base + chapter.html);
+            });
+        }, Promise.resolve(1)); //chain  will get this value
+    }).then(function() {
+        // And we're all done!
+        addTextToPage("All done");
+    }).catch(function(err) {
+        // Catch any error that happened along the way
+        addTextToPage("Argh, broken: " + err.message);
+    }).then(function() {
+        // Always hide the spinner
+        document.querySelector('.spinner').style.display = 'none';
+    });
+    </script>
+</body>
+
+</html>

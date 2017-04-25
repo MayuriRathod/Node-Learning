@@ -8,16 +8,22 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 const Genre = require('./views/genre');
-var path = require('path');
-var exphbs = require('express-handlebars');
+const path = require('path');
+const exphbs = require('express-handlebars');
 const methodOverride = require('method-override');
 
 // Initialize express application
 var app = express();
 var port = 3000;
 
+// Add Helpers and defaultLayout to the express handlebars
+var hbs = exphbs.create({
+    helpers: require("./modules/helpers.js").helpers,
+    defaultLayout: 'main'
+});
+
 // Set handle bar engine
-app.engine('handlebars', exphbs({defaultLayout: 'main'}));
+app.engine('handlebars', hbs.engine);
 app.set('view engine', 'handlebars');
 
 // Create mongo database connection
@@ -41,21 +47,7 @@ app.use(bodyParser.json());
 
 // Home Page
 app.get('/', (req, res) => {
-	res.render('hello', 
-	{ user: 
-		{
-		  contact: {
-		    email: 'hi@azat.co',
-		    twitter: 'azat_co',
-		    facebook: 'vkjijuol vbkohol'
-		  },
-		  address: {
-		    city: 'San Francisco',
-		    state: 'California'
-		  },
-		  name: 'Azat'
-		}
-	});	
+	res.render('hello');
 });
 
 app.get('/add', (req, res) => {
@@ -67,10 +59,8 @@ app.get('/list', (req, res) => {
 		if(err) {
 			throw err;
 		}
-		res.render('getGenre', {genres: genres});
-		//res.json(genres);
+		res.render('getGenre2', {genres: genres});
 	});
-	// res.render('getGenres');
 });
 
 // To get all the genres
@@ -80,26 +70,24 @@ app.get('/api/genres', (req, res) => {
 			throw err;
 		}
 		res.render('getGenre', {genres: genres});
-		//res.json(genres);
 	});
 });
 
 // Routing to add genre
 app.post('/api/genres', (req, res) => {
-	var genre = req.body;
+	let genre = req.body;
 	Genre.addGenre(genre, (err, genre) => {
 		if(err) {
 			throw err;
 		}
-		//res.json(genre);
 		res.redirect('/');
 	});
 });
 
 // Routing to update genre
 app.put('api/genres/:_id', (req, res) => {
-	var id = req.params._id;
-	var genre = req.body;
+	let id = req.params._id;
+	let genre = req.body;
 	Genre.updateGenre(id, genre, {}, (err, genre) => {
 		if(err) {
 			throw err;
@@ -110,7 +98,7 @@ app.put('api/genres/:_id', (req, res) => {
 
 // Routing to delete genre
 app.delete('/api/genres/:_id', (req, res) => {
-	var id= req.params._id;
+	let id = req.params._id;
 	Genre.removeGenre(id, (err, genre) => {
 		if(err) {
 			throw err;

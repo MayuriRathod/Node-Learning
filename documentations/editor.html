@@ -1,0 +1,42 @@
+<html>
+
+<head>
+    <script src="https://cdn.ckeditor.com/4.6.2/standard/ckeditor.js"></script>
+
+</head>
+
+<body>
+    <textarea name="editor1"></textarea>
+<div class="reply-body fr-view">Hi all,<br>
+<br>
+I happened to need such a tool recently, and I found <a href="http://meeech.amihod.com/very-useful-find-unused-css-rules-with-google">this blog post mentioning the Google Chrome Audit tool</a>.<br>
+<br>
+if you happen to need such a tool from time to time, it's free and is part of Google Chrome - the browser.<br>
+<br>
+Open Properties &gt; Tools &gt; Developer Tools<br>
+Click the Audits tab, and then run the test<br>
+<br>
+It shows lots of useful info for you to trim your page down to the bare minimum, to get rid of legacy CSS styles you are no longer using! Of course, the results must be taken with a grain of salt, since for global CSSs it is normal for some styles not to be used in a specific page, but for inline CSSs it's the real deal.<br>
+<br>
+Hope it helps - and a friendly reminder: always backup your work before slashing your CSS styles :)<br>
+<br>
+Regards,<br>
+<br>
+Paulo Tavares<div class="display-mobile ThemeGrid_Width10" align="left" style="margin-left: 0px; margin-top: 20px"></div></div>
+    <script>
+    CKEDITOR.replace('editor1');
+    </script>
+    <script type="text/javascript">
+function downloadJSAtOnload() {
+var element = document.createElement("script");
+element.src = "sample.js";
+document.body.appendChild(element);
+}
+if (window.addEventListener)
+window.addEventListener("load", downloadJSAtOnload, false);
+else if (window.attachEvent)
+window.attachEvent("onload", downloadJSAtOnload);
+else window.onload = downloadJSAtOnload;
+</script>
+</body>
+</html>
