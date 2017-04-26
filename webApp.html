@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html class="no-js">
+	<head>
+		<meta charset="utf-8">
+		<title>Handlers</title>
+		<script src="js/modernizr.js"></script>
+		<script src="js/handlebars-runtime.js"></script>
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.2/jquery.min.js"></script>
+		<script src="templatesCompiled.js"></script>
+
+	</head>
+	<body>
+	<h1>Demo</h1>
+	<div id="test"></div>
+	<script>
+		if(Modernizr.testAllProps('display', 'block')) {
+			$("#test").text(Modernizr);
+			console.log(Modernizr)
+		} else {
+			$("#test").text("Property is not supported");
+		}
+	</script>
+	<h5> List of Students </h5>
+	<ul id="studentNav"></ul>
+	<script src="webAppMain.js"></script>
+	</body>
+</html>
