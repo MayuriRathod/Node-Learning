@@ -1,0 +1,18 @@
+<table class="table table-hover">
+<thead>
+<tr>
+	{{#each this.header}}
+		<th> {{this}} </th>
+	{{/each}}
+</tr>
+</thead>
+<tbody>
+	{{#each this.footer}}
+	<tr>
+		{{#each this}}
+			<td> {{this}} </td>
+		{{/each}}
+	</tr>
+	{{/each}}
+</tbody>
+</table>
