@@ -8,6 +8,7 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 const Genre = require('./views/genre');
+const cors = require('cors');
 
 // initiallize
 var app = express();
@@ -19,7 +20,21 @@ mongoose.connect(url);
 var db = mongoose.connection;
 
 // Middlewares
-app.use(bodyParser.json());
+//app.use(bodyParser.json());
+var originsWhitelist = [
+  'http://localhost:4101'      
+];
+var corsOptions = {
+  origin: function(origin, callback){
+        var isWhitelisted = originsWhitelist.indexOf(origin) !== -1;
+        callback(null, isWhitelisted);
+  },
+  credentials:true
+}
+//here is the magic
+app.use(cors(corsOptions));
+
+
 
 // Home Page
 app.get('/', (req, res) => {
