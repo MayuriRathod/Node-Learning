@@ -1,0 +1,34 @@
+
+Sources -> Set Up Persistence with DevTools Workspaces
+	-> Set up persistent authoring in Chrome DevTools so you can both see your changes immediately and save those changes to disk.
+	-> You don't have to manually copy the changes that you have made in the CSS or in JS files.
+	How to use it?
+		1. Right-click in the left-side panel.
+		2. Select Add Folder to Workspace.
+		3. Choose location of local folder that you want to map.
+		4. Click Allow to give Chrome access to the folder.
+	Then, 
+		1. Right-click or Control+click on a file in the Sources left-side panel.
+		2. Choose Map to File System Resource.
+		3. Select the local file in the persistent workspace.
+		4. Reload the page in Chrome.
+
+	-> we can add/delete/copy/rename files in source panel
+	Limitations:
+		1. Changes in DOM/ added in-line style will not persist
+
+Timeline:
+	-> This is used to analysis the performance of the web page. Web page performance of different web page components can be calculated/
+	Performance Analysis Components:
+		-JS Profile
+		-memory
+		-Paint
+		-Screenshots
+	-> In timeline, enable the component which you want to analysis and start record (ctrl + e) 
+		The timeline will provide you the statistical data for each event like mouse clicked, scroll down, JS function called. (Always record small activities to analysis better like button click, and the loading of whole page.)
+	-> Example. 
+		JS Profile: Suppose you start capturing the activities of on-button click event, 
+			The timeline will provide you the detailed about the time required to call the on-click function and time required to execute the function. Also you can view the use of memory in the memory graph.
+		Paint:
+			Paint tails you about the step-by-step rendering of the colored area. By enabling the screenshots recording you can analysis how much time is 	taken by the particular part to render.
+

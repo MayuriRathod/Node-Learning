@@ -1,0 +1,59 @@
+Array.reduce =>
+	ref_link => https://developer.mozilla.org/en/docs/Web/JavaScript/Reference/Global_Objects/Array/reduce
+	array.reduce(
+		callback_function // 1. [*Required] take first argument as call back function *required
+			accumulator 	// i. takes the value of return or initial value
+			current_value 	// ii. current array value
+			current_index 	// iii. current array index
+			array 			// iv. whole array
+		initial_value    // 2. [Option] Value to use as the first argument to the first call of the callback.
+	)
+	without initial value => The callback function will call with 0th index value of the array, and current value will be the value at 1st index of array
+	with initial value => The callback function will be called with passed value, and current will the value at 0th index of array
+	The accumulator will get the return value of the callback function.
+
+	example:
+	1. Without initial value parameter
+	var array = [0, 1, 2, 3, 4]
+	array.reduce(
+	  	function (
+	    	accumulator,
+	    	currentValue,
+	    	currentIndex,
+	    	array
+	  	) {
+	  		console.log(accumulator, currentValue);
+	    	return currentValue;
+	  	}
+	);	
+
+	Outputs => // will iterate for 4 times only (n-1 times) 
+			0 1
+			1 2
+			2 3
+			3 4
+
+	2. With initial value parameter
+	var array = [0, 1, 2, 3, 4]
+	array.reduce(
+	  	function (
+	    	accumulator,
+	    	currentValue,
+	    	currentIndex,
+	    	array
+	  	) {
+	  		console.log(accumulator, currentValue);
+	    	return currentValue;
+	  	},
+	  	0
+	);
+
+	Outputs => // will iterate for 5 times (n times)
+			0 0 
+			0 1
+			1 2
+			2 3
+			3 4
+
+
+

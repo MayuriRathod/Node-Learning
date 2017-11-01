@@ -7,10 +7,9 @@ update darabase using mongodb and expressjs
 const express = require('express');
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
-const Genre = require('./views/genre');
+const User = require('./views/user');
 const path = require('path');
 const exphbs = require('express-handlebars');
-const methodOverride = require('method-override');
 
 // Initialize express application
 var app = express();

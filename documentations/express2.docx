@@ -1,0 +1,242 @@
+﻿Express-HandleBars Node Module
+
+Most websites will consist of several pages, either static or dynamically generated ones. All these pages usually have common parts; a header and footer part, a navigation part or menu, and so on . This is the layout of our site. What distinguishes one page from another, usually, is some part in the body of the page where the home page has different information than the other pages. With express-handlebars, you can separate layout and content.
+
+
+Basic Directory Structure:
+
+.
+├── app.js
+└── views
+    ├── home.handlebars
+    └── layouts
+        └── main.handlebars
+
+1. app.js:
+
+Creates a super simple Express app which shows the basic way to register a Handlebars view engine using this package.
+
+Example:
+var express = require('express');
+var exphbs  = require('express-handlebars');
+
+var app = express();
+
+app.engine('handlebars', exphbs({defaultLayout: 'main'}));
+app.set('view engine', 'handlebars');
+
+app.get('/', function (req, res) {
+    res.render('home');
+});
+
+app.listen(3000);
+
+2. views/layouts/main.handlebars:
+
+The main layout is the HTML page wrapper which can be reused for the different views of the app. `{{{body}}}` is used as a placeholder for where the main content should be rendered.
+
+Example:
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Example App</title>
+</head>
+<body>
+
+    {{{body}}}
+
+</body>
+</html>
+
+3. views/home.handlebars:
+
+The content for the app's home view which will be rendered into the layout's `{{{body}}}`.
+
+Example:
+<h1>Example App: Home</h1>
+
+
+4. Result: 
+
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>Example App</title>
+</head>
+<body>
+	<h1>Example App: Home</h1>
+</body>
+</html>
+
+
+Conditions:
+1. If:
+
+Handler:
+{{#if user.admin}} 
+	<button class="launch">Launch Spacecraft</button> 
+{{else}} 
+	<button class="login"> Log in</button> 
+{{/if}}
+
+Data:
+{ user: { admin: true } }
+
+Result:
+<button class="launch">Launch Spacecraft</button>
+
+
+2. Unless:
+
+Handler:
+{{#unless user.admin}} 
+	<button class="login"> Log in</button> 
+{{else}} 
+	<button class="launch">Launch Spacecraft</button> 
+{{/unless}}
+
+Data:
+{ user: { admin: true } }
+
+Result:
+<button class="launch">Launch Spacecraft</button>
+
+
+
+3. wait: 
+
+Handler:
+{{#with user}} 
+	<p>{{name}}</p> 
+	{{#with contact}} 
+		<span>Twitter: @{{twitter}}</span> 
+	{{/with}} 
+	<span>Address: {{address.city}}, 
+{{/with}} 
+{{user.address.state}}</span>
+
+Data:
+{ user: 
+	{ contact: 
+	  { 
+		email: 'hi@azat.co', 
+	  	twitter: 'azat_co' 
+	  }, 
+	  address: 
+	  { 
+		city: 'San Francisco', 
+	    	state: 'California' 
+	  }, 
+	  name: 'Azat' 
+	}
+}
+
+Result:
+<p>Azat</p> 
+<span>Twitter: @azat_co</span> 
+<span>Address: San Francisco, California </span>
+
+
+
+4. Comments:
+
+Handler:
+<!-- content goes here --> 
+<p>Node.js is a non-blocking I/O for scalable apps.</p> 
+{{! @todo change this to a class}} 
+{{!-- add the example on {{#if}} --}} 
+<p id="footer">Copyright 2014 Azat</p>
+
+Result:
+<!-- content goes here --> 
+<p>Node.js is a non-blocking I/O for scalable apps.</p> 
+<p id="footer">Copyright 2014 Azat</p>
+
+
+Helpers
+
+Helper functions, or "helpers" are functions that can be [registered with Handlebars][] and can be called within a template. Helpers can be used for transforming output, iterating over data, etc. To keep with the spirit of *logic-less* templates, helpers are the place where logic should be defined.
+
+Handlebars ships with some [built-in helpers][], such as: `with`, `if`, `each`, etc. Most application will need to extend this set of helpers to include app-specific logic and transformations. Beyond defining global helpers on `Handlebars`, this view engine supports `ExpressHandlebars` instance-level helpers via the `helpers` configuration property, and render-level helpers via `options.helpers` when calling the `render()` and `renderView()` methods.
+
+Example
+
+Script:
+
+var express = require('express');
+var exphbs  = require('express-handlebars');
+
+var app = express();
+
+var hbs = exphbs.create({
+    // Specify helpers which are only registered on this instance.
+    helpers: {
+        foo: function () { return 'FOO!'; },
+        bar: function () { return 'BAR!'; }
+    }
+});
+
+app.engine('handlebars', hbs.engine);
+app.set('view engine', 'handlebars');
+
+app.get('/', function (req, res, next) {
+    res.render('home', {
+        showTitle: true,
+
+        // Override `foo` helper only for this rendering.
+        helpers: {
+            foo: function () { return 'foo.'; }
+        }
+    });
+});
+
+app.listen(3000);
+
+Handler:
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Example App - Home</title>
+</head>
+<body>
+
+    <!-- Uses built-in `if` helper. -->
+  {{#if showTitle}}
+    <h1>Home</h1>
+  {{/if}}
+
+    <!-- Calls `foo` helper, overridden at render-level. -->
+    <p>{{foo}}</p>
+
+    <!-- Calls `bar` helper, defined at instance-level. -->
+    <p>{{bar}}</p>
+
+</body>
+</html>
+
+Result:
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Example App - Home</title>
+</head>
+<body>
+    <h1>Home</h1>
+    <p>foo.</p>
+    <p>BAR!</p>
+</body>
+</html>
+
+
+
+References:
+1. http://handlebarsjs.com/
+2. https://webapplog.com/handlebars/
+3. https://github.com/ericf/express-handlebars
+4. https://www.packtpub.com/books/content/using-handlebars-express
+

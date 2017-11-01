@@ -1,0 +1,153 @@
+Curry Function 
+---------------
+
+
+Currying is a process of transforming a function with multiple arity into the same function with less arity. 
+Arity means argument so binding some of the arguments to the first function invoke, so that those values are fixed for the next invocation.
+
+Basically In this We return in function by fixing some of argument value like
+
+function curryFunction(fixed_variable) {
+   return new function(varied_variable) {
+	//here u can use fixed variable
+	console.log(fixed_variable + varied_variable);
+   }
+}
+
+
+var innerFunction = curryFunction("Rohit");
+innerFunction("Is a good boy");
+innerFunction("Moddie boy");
+
+
+*This is very useful for making higher level function with some predefined configuration and derived helper from it.
+Also this is cab be used in callback techniques to make asynchronous  like file read operation in nodejs
+var read = curryReadFunction(pathA);
+read(data){
+  //do something with data
+}
+
+
+
+
+
+
+
+Bind 
+--------
+
+
+Basically bind () allows us to easily set which specific object will be bound to this when a function or method is invoked Which means bind set explicity this for a method.
+
+*Bind creates a new function that when called calls the original function with the context of its first argument and with the subsequent sequence of arguments (FOLLOW CURRY METHODOLOGY)
+
+---------
+Example 
+---------
+
+//this is a function which is highly using this.
+function getMontlhlyFee(fee){
+  var remaining = this.total - fee;
+  this.total = remaining;
+  return this.name +' remaining balance:'+remaining;
+}
+
+//by simply calling getMonthlyFee(4353)
+  this -> window (global object);
+
+var rachel = {name:'Rachel Green', total:500};
+Now, create a function that can be used again and again to deduct the fee from her account every month
+
+//bind
+var getRachelFee = getMontlhlyFee.bind(rachel, 90);
+//deduct
+getRachelFee();//Rachel Green remaining balance:410
+getRachelFee();//Rachel Green remaining balance:320
+
+
+
+
+Apply and Call
+-------------------
+
+
+This is also use to set this explicity during function invocation.
+*** So Difference 
+	Bind - is use to bind this, later we can call that binded function with this 
+	Apply/call - is use to call a function while setting this value
+
+Example 
+------
+
+Keeping above getMonthlyfee function refernce
+
+*functionTobecalled.call(/object_this/, /additional_arguments/);
+getmonthlyfee.call(rachel, 90);
+
+
+*** Apply and call diffrences
+    - Call and apply are pretty interchangeable. Just decide whether it’s easier to send in an array or a comma separated list of arguments.
+
+
+Examples
+---------
+
+call Example
+-----------
+
+
+var person1 = {firstName: 'Jon', lastName: 'Kuperman'};
+var person2 = {firstName: 'Kelly', lastName: 'King'};
+ 
+function say(greeting) {
+    console.log(greeting + ' ' + this.firstName + ' ' + this.lastName);
+}
+ 
+say.call(person1, 'Hello'); // Hello Jon Kuperman
+say.call(person2, 'Hello'); // Hello Kelly King
+
+
+Apply Example
+--------
+var person1 = {firstName: 'Jon', lastName: 'Kuperman'};
+var person2 = {firstName: 'Kelly', lastName: 'King'};
+
+function say(greeting) {
+    console.log(greeting + ' ' + this.firstName + ' ' + this.lastName);
+}
+
+say.apply(person1, ['Hello']); // Hello Jon Kuperman
+say.apply(person2, ['Hello']); // Hello Kelly King
+
+
+
+
+
+***Borrowing Functions with Apply and Call (A Must Know)***
+------------------------------------------------------------------------------
+Arrays come with a number of useful methods for iterating and modifying arrays, but object does not have these methods.
+But Array-like Object can borrow these function 
+
+huh Array-like Object --- var aObject = {0: 'rohit', 1: 'chahar', 3: 22, 4: 'Agra'};
+
+Slice function borrowing example
+-----
+var newArray = Array.prototype.slice.call (aObject, 0);
+console.log(newArray)  / [rohit,chahar,22,Agra];
+
+
+Reverse the object example
+------
+reverseObject = Array.prototype.reverse.call(aObject);
+
+
+
+
+
+References 
+---------
+	1.http://stackoverflow.com/questions/2236747/use-of-the-javascript-bind-method
+	2.http://javascriptissexy.com/javascript-apply-call-and-bind-methods-are-essential-for-javascript-professionals/
+	3.http://stackoverflow.com/questions/113780/javascript-curry-what-are-the-practical-applications
+	4.https://medium.com/@kbrainwave/currying-in-javascript-ce6da2d324fe
+

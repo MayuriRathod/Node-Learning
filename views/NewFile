@@ -1,0 +1,9 @@
+$(function() {
+    var studentData = [
+        {name: "Mayuri Rathod", class: "engineer"},
+        {name: "Himanshu Rathod", class:"accountant"}
+    ];
+    var templateScript = $("#student-template").html();
+    var template = Handlerbars.compile(templateScript);
+    $(.studentsNav).append(template(studentData));
+})
